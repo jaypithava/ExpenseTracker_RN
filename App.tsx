@@ -7,7 +7,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import RecentExpenses from './screens/RecentExpenses';
-import {GlobalStyles} from './components/styles';
+import {GlobalStyles} from './constants/styles';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
@@ -19,7 +19,7 @@ function BottomTabs() {
     <Tab.Navigator
       screenOptions={{
         headerStyle: {backgroundColor: GlobalStyles.colors.primary500},
-        headerTintColor: 'white',
+        headerTintColor: GlobalStyles.colors.white,
         tabBarStyle: {backgroundColor: GlobalStyles.colors.primary500},
         tabBarActiveTintColor: GlobalStyles.colors.accent500,
       }}>
@@ -40,10 +40,9 @@ function BottomTabs() {
         options={{
           title: 'All Expenses',
           tabBarLabel: 'All Expenses',
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({color, size}) => (
             <AntDesign name="calendar" size={size} color={color} />
           ),
-          
         }}
       />
     </Tab.Navigator>

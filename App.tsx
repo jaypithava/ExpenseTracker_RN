@@ -11,6 +11,7 @@ import {GlobalStyles} from './constants/styles';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import IconButton from './UI/IconButton';
+import ExpensesContextProvider from './store/expenses-context';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -61,23 +62,25 @@ function BottomTabs() {
 }
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerStyle: {backgroundColor: GlobalStyles.colors.primary500},
-          headerTintColor: GlobalStyles.colors.white,
-        }}>
-        <Stack.Screen
-          name="Back"
-          component={BottomTabs}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="ManageExpenses"
-          component={ManageExpenses}
-          options={{presentation: 'modal'}}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <ExpensesContextProvider>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: {backgroundColor: GlobalStyles.colors.primary500},
+            headerTintColor: GlobalStyles.colors.white,
+          }}>
+          <Stack.Screen
+            name="Back"
+            component={BottomTabs}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="ManageExpenses"
+            component={ManageExpenses}
+            options={{presentation: 'modal'}}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ExpensesContextProvider>
   );
 }

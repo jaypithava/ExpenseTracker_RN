@@ -2,9 +2,16 @@ import {View, Text, Pressable, StyleSheet} from 'react-native';
 import React from 'react';
 import {GlobalStyles} from '../../constants/styles';
 import {getFormattedDate} from '../../utils/date';
+import {useNavigation} from '@react-navigation/native';
 
-const ExpensesItem = ({description, date, amount, onPress}) => {
-  function expensesPressHandler() {}
+const ExpensesItem = ({id, description, date, amount}) => {
+  const navigation = useNavigation();
+
+  function expensesPressHandler() {
+    navigation.navigate('ManageExpenses', {
+      expenseId: id,
+    });
+  }
 
   return (
     <Pressable

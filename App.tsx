@@ -10,6 +10,7 @@ import RecentExpenses from './screens/RecentExpenses';
 import {GlobalStyles} from './constants/styles';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import IconButton from './UI/IconButton';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -22,6 +23,14 @@ function BottomTabs() {
         headerTintColor: GlobalStyles.colors.white,
         tabBarStyle: {backgroundColor: GlobalStyles.colors.primary500},
         tabBarActiveTintColor: GlobalStyles.colors.accent500,
+        headerRight: ({tintColor}) => (
+          <IconButton
+            icon="add"
+            size={24}
+            color={tintColor}
+            onPress={() => {}}
+          />
+        ),
       }}>
       <Tab.Screen
         name="RecentExpenses"

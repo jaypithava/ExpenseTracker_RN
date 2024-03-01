@@ -26,34 +26,30 @@ export default function ManageExpenses({route, navigation}) {
     navigation.goBack();
   }
 
-  function confirmHandler() {
+  function confirmHandler(expensesData) {
     if (isEdited) {
-      expensesUseContext.updateExpenses(editedExpenseID, {
-        description: 'Test!!!!',
-        amount: 200,
-        date: new Date('2023-06-22'),
-      });
+      expensesUseContext.updateExpenses(editedExpenseID, expensesData);
     } else {
-      expensesUseContext.addExpenses({
-        description: 'Test',
-        amount: 500,
-        date: new Date('2022-05-22'),
-      });
+      expensesUseContext.addExpenses(expensesData);
     }
     navigation.goBack();
   }
 
   return (
     <View style={styles.container}>
-      <ExpenseForm />
-      <View style={styles.button}>
+      <ExpenseForm
+        onSubmit={confirmHandler}
+        onCancel={cancelHandler}
+        submitButtonLabel={isEdited ? 'Update' : 'Add'}
+      />
+      {/* <View style={styles.button}>
         <Button style={styles.buttonText} mode="flat" onPress={cancelHandler}>
           Cancel
         </Button>
         <Button style={styles.buttonText} onPress={confirmHandler}>
           {isEdited ? 'Update' : 'Add'}
         </Button>
-      </View>
+      </View> */}
       {isEdited && (
         <View style={styles.deleteContainer}>
           <IconButton

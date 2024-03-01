@@ -30,13 +30,12 @@ export default function ManageExpenses({route, navigation}) {
     navigation.goBack();
   }
 
-  function confirmHandler(expensesData) {
+  async function confirmHandler(expensesData) {
     if (isEdited) {
       expensesUseContext.updateExpenses(editedExpenseID, expensesData);
     } else {
-      console.log('Expenses', expensesData);
-      storeExpenses(expensesData);
-      expensesUseContext.addExpenses(expensesData);
+      const id = await storeExpenses(expensesData);
+      expensesUseContext.addExpenses({...expensesData, id: id});
     }
     navigation.goBack();
   }

@@ -1,13 +1,30 @@
 import {StyleSheet, View} from 'react-native';
-import React, {useContext, useLayoutEffect, useState} from 'react';
+import React, {useContext, useLayoutEffect, useState, useEffect} from 'react';
 import IconButton from '../UI/IconButton';
 import {GlobalStyles} from '../constants/styles';
 import {ExpensesContext} from '../store/expenses-context';
 import ExpenseForm from '../components/ExpensesOutput/ManageExpense/ExpenseForm';
 import {storeExpenses, updateExpenses, deleteExpenses} from '../utils/http';
 import LoadingOverlay from '../UI/LoadingOverlay';
+// At the top of your file
+import PushNotification from 'react-native-push-notification';
+import { getFormattedDate } from '../utils/date';
 
 export default function ManageExpenses({route, navigation}) {
+  useEffect(() => {
+    // Set up PushNotification configuration
+    PushNotification.createChannel(
+      {
+        channelId: 'channel_id_example_01', // Choose a unique channel id
+        channelName: 'Default Channel',
+        channelDescription: 'Your Channel Description',
+        soundName: 'default',
+        importance: 4,
+        vibrate: true,
+      },
+      created => console.log(`Channel created: ${created}`),
+    );
+  }, []);
   const [isFetching, setIsFetching] = useState(false);
   const expensesUseContext = useContext(ExpensesContext);
   const editedExpenseID = route.params?.expenseId;
@@ -47,6 +64,13 @@ export default function ManageExpenses({route, navigation}) {
       const id = await storeExpenses(expensesData);
       expensesUseContext.addExpenses({...expensesData, id: id});
     }
+    // Add local notification when a task is added
+    PushNotification.localNotification({
+      channelId: 'channel_id_example_01',
+      title: `New Task Added : ${getFormattedDate(expensesData.date)}`,
+      message: `You have added a new task name is: ${expensesData.description}`,
+    });
+
     navigation.goBack();
   }
 
